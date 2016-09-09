@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require 'trigger_build'
+
+TriggerBuild.travis
