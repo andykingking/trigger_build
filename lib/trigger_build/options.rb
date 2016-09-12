@@ -6,7 +6,7 @@ module TriggerBuild
   class Options
 
     def self.parse(args)
-      opts = Slop.parse args do |o|
+      opts = Slop.parse(args) do |o|
         o.banner = "usage: trigger_build [options] owner repo"
         o.separator ""
         o.separator "options:"
