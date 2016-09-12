@@ -63,7 +63,6 @@ describe TriggerBuild::Options do
   end
 
   context 'when the correct number of parameters are given' do
-
     args = %w{the_owner a_repo}
     subject { TriggerBuild::Options.parse(args) }
 
@@ -81,8 +80,7 @@ describe TriggerBuild::Options do
     end
 
     context 'and no token is specified' do
-
-      before(:each) do
+      before do
         args = %w{the_owner a_repo}
         ENV['TRAVIS_API_TOKEN'] = 'my_token'
       end
@@ -93,8 +91,7 @@ describe TriggerBuild::Options do
     end
 
     context 'and a token is specified' do
-
-      before(:each) do
+      before do
         args = %w{the_owner a_repo --token 12345}
         ENV['TRAVIS_API_TOKEN'] = 'should_not_use_this_token'
       end
@@ -105,8 +102,7 @@ describe TriggerBuild::Options do
     end
 
     context 'and the --pro flag is specified' do
-
-      before(:each) do
+      before do
         args = %w{the_owner a_repo --pro}
         ENV['TRAVIS_API_TOKEN'] = 'should_not_use_this_token'
       end
@@ -117,8 +113,7 @@ describe TriggerBuild::Options do
     end
 
     context 'and the --pro flag is not specified' do
-
-      before(:each) do
+      before do
         args = %w{the_owner a_repo}
         ENV['TRAVIS_API_TOKEN'] = 'should_not_use_this_token'
       end
