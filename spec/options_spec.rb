@@ -63,25 +63,28 @@ describe TriggerBuild::Options do
   end
 
   context 'when the correct number of parameters are given' do
-    args = %w{the_owner a_repo}
     subject { TriggerBuild::Options.parse(args) }
 
-    it 'uses the given parameters and default options' do
-      defaults = { owner: 'the_owner', repo: 'a_repo', token: nil, url: 'travis-ci.org' }
+    context 'and supplied no options' do
+      let(:args) { %w{owner repo} }
 
-      expect(subject).to eq(defaults)
+      it 'uses the given parameters and default options' do
+        expect(subject).to eq({ owner: 'owner', repo: 'repo', token: nil, url: 'travis-ci.org' })
+      end
     end
 
-    it 'uses the given parameters and all supplied options' do
-      args = %w{--token 54321 --pro company repo}
-      options = { owner: 'company', repo: 'repo', token: '54321', url: 'travis-ci.com' }
+    context 'and supplied all options' do
+      let(:args) { %w{--token 54321 --pro me repo} }
 
-      expect(subject).to eq(options)
+      it 'uses the given parameters and all supplied options' do
+        expect(subject).to eq({ owner: 'me', repo: 'repo', token: '54321', url: 'travis-ci.com' })
+      end
     end
 
     context 'and no token is specified' do
+      let(:args) { %w{the_owner a_repo} }
+
       before do
-        args = %w{the_owner a_repo}
         ENV['TRAVIS_API_TOKEN'] = 'my_token'
       end
 
@@ -91,8 +94,9 @@ describe TriggerBuild::Options do
     end
 
     context 'and a token is specified' do
+      let(:args) { %w{the_owner a_repo --token 12345} }
+
       before do
-        args = %w{the_owner a_repo --token 12345}
         ENV['TRAVIS_API_TOKEN'] = 'should_not_use_this_token'
       end
 
@@ -102,10 +106,7 @@ describe TriggerBuild::Options do
     end
 
     context 'and the --pro flag is specified' do
-      before do
-        args = %w{the_owner a_repo --pro}
-        ENV['TRAVIS_API_TOKEN'] = 'should_not_use_this_token'
-      end
+      let(:args) { %w{the_owner a_repo --pro} }
 
       it 'uses the private travis-ci.com url' do
         expect(subject).to include({ url: 'travis-ci.com' })
@@ -113,10 +114,7 @@ describe TriggerBuild::Options do
     end
 
     context 'and the --pro flag is not specified' do
-      before do
-        args = %w{the_owner a_repo}
-        ENV['TRAVIS_API_TOKEN'] = 'should_not_use_this_token'
-      end
+      let(:args) { %w{the_owner a_repo} }
 
       it 'uses the public travis-ci.org url' do
         expect(subject).to include({ url: 'travis-ci.org' })
