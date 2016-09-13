@@ -18,7 +18,7 @@ Or install it yourself as:
 
 ## Usage
 
-TriggerBuild is a simple command line application that can be used to trigger builds on TravisCI.
+TriggerBuild is a simple command line application that can be used to trigger builds on Travis CI.
 
 The following example triggers a build of trigger_build:
 

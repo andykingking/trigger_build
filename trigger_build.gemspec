@@ -10,8 +10,8 @@ Gem::Specification.new do |spec|
   spec.email         = ['void@rdavis.xyz']
   spec.executables   = ['trigger_build']
 
-  spec.summary       = 'Trigger TravisCI builds'
-  spec.description   = 'Trigger TravisCI builds with ease'
+  spec.summary       = 'Trigger Travis CI builds'
+  spec.description   = 'Trigger Travis CI builds with ease'
   spec.homepage      = 'https://github.com/MYOB-Technology/trigger_build'
   spec.license       = 'MIT'
 
