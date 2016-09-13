@@ -4,7 +4,7 @@ require 'trigger_build/travis'
 
 module TriggerBuild
 
-  def self.travis(args: ARGV)
+  def self.travis(args = ARGV)
     opts = Options.parse(args)
     repo = Repo.new
     travis = Travis.new(opts)
