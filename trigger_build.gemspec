@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = TriggerBuild::VERSION
   spec.authors       = ['Ryan Davis']
   spec.email         = ['void@rdavis.xyz']
-  spec.executables   << 'trigger_build'
+  spec.executables   = ['trigger_build']
 
   spec.summary       = 'Trigger TravisCI builds'
   spec.description   = 'Trigger TravisCI builds with ease'
