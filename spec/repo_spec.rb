@@ -19,12 +19,10 @@ describe TriggerBuild::Repo do
     end
 
     context 'when a directory is provided' do
-      let(:dir) { 'path/to/the/repo' }
-
-      subject { TriggerBuild::Repo.new(dir) }
+      subject { TriggerBuild::Repo.new('path/to/the/repo') }
 
       it 'uses the given directory' do
-        expect(Git).to receive(:open).with(dir)
+        expect(Git).to receive(:open).with('path/to/the/repo')
 
         subject
       end
@@ -32,12 +30,8 @@ describe TriggerBuild::Repo do
   end
 
   describe '#name' do
-    let(:dir) { instance_double('Git::WorkingDirectory') }
-
-    before do
-      allow(git).to receive(:dir).and_return(dir)
-      allow(dir).to receive(:path).and_return('path/to/my/repo')
-    end
+    let(:git) { instance_double('Git::Base', dir: dir) }
+    let(:dir) { instance_double('Git::WorkingDirectory', path: 'path/to/my/repo') }
 
     it 'uses the current directory as the repo name' do
       expect(subject.name).to eq('repo')
@@ -45,16 +39,15 @@ describe TriggerBuild::Repo do
   end
 
   describe '#last_commit_message' do
-    let(:commit) { instance_double('Git::Object::Commit') }
+    let(:git) { instance_double('Git::Base', log: %w(995204d 64e3218 1b67d9a)) }
+    let(:commit) { instance_double('Git::Object::Commit', message: 'Last commit message') }
 
     before do
-      allow(git).to receive(:log).and_return(%w(995204d 64e3218 1b67d9a))
       allow(git).to receive(:gcommit).with('995204d').and_return(commit)
-      allow(commit).to receive(:message).and_return('This is the last commit message')
     end
 
     it 'returns the last commit message' do
-      expect(subject.last_commit_message).to eq('This is the last commit message')
+      expect(subject.last_commit_message).to eq('Last commit message')
     end
   end
 end
