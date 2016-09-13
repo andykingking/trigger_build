@@ -14,9 +14,7 @@ module TriggerBuild
     end
 
     def trigger(message, branch: 'master')
-      self.class.post("/requests", query: {
-        request: { message: message, branch: branch }
-      })
+      self.class.post('/requests', query: { request: { message: message, branch: branch } })
     end
   end
 
