@@ -22,7 +22,7 @@ TriggerBuild is a simple command line application that can be used to trigger bu
 
 The following example triggers a build of trigger_build:
 
-    $ trigger_build MYOB-Technology trigger_build --pro --token $TRAVIS_API_TOKEN
+    $ trigger_build MYOB-Technology trigger_build --token $TRAVIS_API_TOKEN
 
 For detailed usage:
 
