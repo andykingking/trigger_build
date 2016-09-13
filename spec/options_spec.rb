@@ -34,90 +34,94 @@ shared_examples 'invalid arguments' do |args|
 end
 
 describe TriggerBuild::Options do
-  context 'when -h option used' do
-    it_behaves_like 'a valid command line option', %w(-h), usage
-  end
+  describe '#parse' do
+    let(:args) { %w() }
 
-  context 'when --help option used' do
-    it_behaves_like 'a valid command line option', %w(--help), usage
-  end
-
-  context 'when -v option used' do
-    it_behaves_like 'a valid command line option', %w(-v), "#{TriggerBuild::VERSION}\n"
-  end
-
-  context 'when --version option used' do
-    it_behaves_like 'a valid command line option', %w(--version), "#{TriggerBuild::VERSION}\n"
-  end
-
-  context 'when no parameters are specified' do
-    it_behaves_like 'invalid arguments', %w()
-  end
-
-  context 'when not enough parameters are specified' do
-    it_behaves_like 'invalid arguments', %w(the_owner)
-  end
-
-  context 'when too many parameters are specified' do
-    it_behaves_like 'invalid arguments', %w(the_owner a_repo some_stuff)
-  end
-
-  context 'when the correct number of parameters are given' do
     subject { TriggerBuild::Options.parse(args) }
 
-    context 'and supplied no options' do
-      let(:args) { %w{owner repo} }
-
-      it 'uses the given parameters and default options' do
-        expect(subject).to eq({ owner: 'owner', repo: 'repo', token: nil, url: 'travis-ci.org' })
-      end
+    context 'when -h option is used' do
+      it_behaves_like 'a valid command line option', %w(-h), usage
     end
 
-    context 'and supplied all options' do
-      let(:args) { %w{--token 54321 --pro me repo} }
-
-      it 'uses the given parameters and all supplied options' do
-        expect(subject).to eq({ owner: 'me', repo: 'repo', token: '54321', url: 'travis-ci.com' })
-      end
+    context 'when --help option is used' do
+      it_behaves_like 'a valid command line option', %w(--help), usage
     end
 
-    context 'and no token is specified' do
-      let(:args) { %w{the_owner a_repo} }
-
-      before do
-        ENV['TRAVIS_API_TOKEN'] = 'my_token'
-      end
-
-      it 'uses the TRAVIS_API_TOKEN environment variable' do
-        expect(subject).to include({ token: 'my_token' })
-      end
+    context 'when -v option is used' do
+      it_behaves_like 'a valid command line option', %w(-v), "#{TriggerBuild::VERSION}\n"
     end
 
-    context 'and a token is specified' do
-      let(:args) { %w{the_owner a_repo --token 12345} }
-
-      before do
-        ENV['TRAVIS_API_TOKEN'] = 'should_not_use_this_token'
-      end
-
-      it 'prefers the given token over the environment variable' do
-        expect(subject).to include({ token: '12345' })
-      end
+    context 'when --version option is used' do
+      it_behaves_like 'a valid command line option', %w(--version), "#{TriggerBuild::VERSION}\n"
     end
 
-    context 'and the --pro flag is specified' do
-      let(:args) { %w{the_owner a_repo --pro} }
-
-      it 'uses the private travis-ci.com url' do
-        expect(subject).to include({ url: 'travis-ci.com' })
-      end
+    context 'when no parameters are specified' do
+      it_behaves_like 'invalid arguments', %w()
     end
 
-    context 'and the --pro flag is not specified' do
-      let(:args) { %w{the_owner a_repo} }
+    context 'when not enough parameters are specified' do
+      it_behaves_like 'invalid arguments', %w(the_owner)
+    end
 
-      it 'uses the public travis-ci.org url' do
-        expect(subject).to include({ url: 'travis-ci.org' })
+    context 'when too many parameters are specified' do
+      it_behaves_like 'invalid arguments', %w(the_owner a_repo some_stuff)
+    end
+
+    context 'when the correct number of parameters are given' do
+      context 'and supplied no options' do
+        let(:args) { %w(owner repo) }
+
+        it 'uses the given parameters and default options' do
+          expect(subject).to eq({ owner: 'owner', repo: 'repo', token: nil, url: 'travis-ci.org' })
+        end
+      end
+
+      context 'and supplied all options' do
+        let(:args) { %w(--token 54321 --pro me repo) }
+
+        it 'uses the given parameters and all supplied options' do
+          expect(subject).to eq({ owner: 'me', repo: 'repo', token: '54321', url: 'travis-ci.com' })
+        end
+      end
+
+      context 'and no token is specified' do
+        let(:args) { %w(the_owner a_repo) }
+
+        before do
+          ENV['TRAVIS_API_TOKEN'] = 'my_token'
+        end
+
+        it 'uses the TRAVIS_API_TOKEN environment variable' do
+          expect(subject).to include({ token: 'my_token' })
+        end
+      end
+
+      context 'and a token is specified' do
+        let(:args) { %w(the_owner a_repo --token 12345) }
+
+        before do
+          ENV['TRAVIS_API_TOKEN'] = 'should_not_use_this_token'
+        end
+
+        it 'prefers the given token over the environment variable' do
+          expect(subject).to include({ token: '12345' })
+        end
+      end
+
+      context 'and the --pro flag is specified' do
+        let(:args) { %w(the_owner a_repo --pro) }
+
+        it 'uses the private travis-ci.com url' do
+          expect(subject).to include({ url: 'travis-ci.com' })
+        end
+      end
+
+      context 'and the --pro flag is not specified' do
+        let(:args) { %w(the_owner a_repo) }
+
+        it 'uses the public travis-ci.org url' do
+          expect(subject).to include({ url: 'travis-ci.org' })
+        end
       end
     end
   end
