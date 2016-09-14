@@ -72,7 +72,7 @@ describe TriggerBuild::Options do
         let(:args) { %w(owner repo) }
 
         it 'uses the given parameters and default options' do
-          expect(subject).to eq({ owner: 'owner', repo: 'repo', token: nil, url: 'travis-ci.org' })
+          expect(subject).to eq({ owner: 'owner', repo: 'repo', token: nil, pro: false })
         end
       end
 
@@ -80,7 +80,7 @@ describe TriggerBuild::Options do
         let(:args) { %w(--token 54321 --pro me repo) }
 
         it 'uses the given parameters and all supplied options' do
-          expect(subject).to eq({ owner: 'me', repo: 'repo', token: '54321', url: 'travis-ci.com' })
+          expect(subject).to eq({ owner: 'me', repo: 'repo', token: '54321', pro: true })
         end
       end
 
@@ -111,16 +111,16 @@ describe TriggerBuild::Options do
       context 'and the --pro flag is specified' do
         let(:args) { %w(the_owner a_repo --pro) }
 
-        it 'uses the private travis-ci.com url' do
-          expect(subject).to include({ url: 'travis-ci.com' })
+        it 'sets the pro option' do
+          expect(subject).to include({ pro: true })
         end
       end
 
       context 'and the --pro flag is not specified' do
         let(:args) { %w(the_owner a_repo) }
 
-        it 'uses the public travis-ci.org url' do
-          expect(subject).to include({ url: 'travis-ci.org' })
+        it 'does not set the pro option' do
+          expect(subject).to include({ pro: false })
         end
       end
     end

@@ -27,10 +27,8 @@ module TriggerBuild
         abort opts.to_s
       end
 
-      url = opts.pro? ? 'travis-ci.com' : 'travis-ci.org'
       owner, repo = *opts.args
-
-      { owner: owner, repo: repo, token: opts[:token], url: url }
+      { owner: owner, repo: repo, token: opts[:token], pro: opts.pro? }
     end
 
   end

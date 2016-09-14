@@ -4,8 +4,11 @@ require 'trigger_build/travis'
 
 module TriggerBuild
 
-  def self.travis(args = ARGV)
-    opts = Options.parse(args)
+  def self.parse_args(args)
+    Options.parse(args)
+  end
+
+  def self.travis(opts)
     repo = Repo.new
     travis = Travis.new(opts)
     travis.trigger("Triggered by #{repo.name}: #{repo.last_commit_message}", branch: 'master')

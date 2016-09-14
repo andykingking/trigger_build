@@ -19,14 +19,27 @@ describe TriggerBuild::Travis do
     end
 
     context 'with options' do
-      let(:opts) { { url: 'travis-ci.com', owner: 'company', repo: 'super_repo', token: 'abc123' } }
-
-      it 'sets the base uri using the given options' do
-        expect(subject.class.base_uri).to eq('http://api.travis-ci.com/repo/company%2Fsuper_repo')
-      end
+      let(:pro) { false }
+      let(:opts) { { owner: 'company', repo: 'super_repo', token: 'abc123', pro: pro } }
 
       it 'sets the header authorization token using the given options' do
         expect(subject.class.headers).to include('Authorization' => 'token abc123')
+      end
+
+      context 'with the pro option' do
+        let(:pro) { true }
+
+        it 'sets the base uri using the private travis url' do
+          expect(subject.class.base_uri).to eq('http://api.travis-ci.com/repo/company%2Fsuper_repo')
+        end
+      end
+
+      context 'without the pro option' do
+        let(:pro) { false }
+
+        it 'sets the base uri using the public travis url' do
+          expect(subject.class.base_uri).to eq('http://api.travis-ci.org/repo/company%2Fsuper_repo')
+        end
       end
     end
   end

@@ -9,7 +9,8 @@ module TriggerBuild
       'Travis-API-Version' => '3'
 
     def initialize(opts)
-      self.class.base_uri "api.#{opts[:url]}/repo/#{opts[:owner]}\%2F#{opts[:repo]}"
+      url = opts[:pro] ? 'travis-ci.com' : 'travis-ci.org'
+      self.class.base_uri "api.#{url}/repo/#{opts[:owner]}\%2F#{opts[:repo]}"
       self.class.headers 'Authorization' => "token #{opts[:token]}"
     end
 

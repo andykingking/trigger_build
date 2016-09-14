@@ -3,4 +3,5 @@
 require 'pp'
 require 'trigger_build'
 
-pp TriggerBuild.travis
+opts = TriggerBuild.parse_args(ARGV)
+pp TriggerBuild.travis(opts)
