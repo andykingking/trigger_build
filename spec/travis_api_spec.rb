@@ -49,7 +49,7 @@ describe TriggerBuild::TravisAPI do
     let(:branch) { 'master' }
     let(:query) { { request: { message: message, branch: branch } } }
 
-    let(:httparty) { class_double('HTTParty') }
+    let(:httparty) { class_double(HTTParty) }
 
     before do
       allow(subject).to receive(:class).and_return(httparty)
