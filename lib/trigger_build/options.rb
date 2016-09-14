@@ -7,9 +7,9 @@ module TriggerBuild
 
     def self.parse(args)
       opts = Slop.parse(args) do |o|
-        o.banner = "usage: trigger_build [options] owner repo"
-        o.separator ""
-        o.separator "options:"
+        o.banner = 'usage: trigger_build [options] owner repo'
+        o.separator ''
+        o.separator 'options:'
         o.bool '--pro', 'use travis-ci.com'
         o.string '-t', '--token',
           'the TravisCI API token (default: TRAVIS_API_TOKEN)', default: ENV['TRAVIS_API_TOKEN']
