@@ -10,8 +10,7 @@ module TriggerBuild
 
   def self.travis(opts)
     repo = Repo.new
-    travis = Travis.new(opts)
-    travis.trigger("Triggered by #{repo.name}: #{repo.last_commit_message}", branch: 'master')
+    TravisAPI.new(opts).trigger("Triggered by #{repo.name}: #{repo.last_commit_message}")
   end
 
 end

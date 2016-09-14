@@ -2,7 +2,7 @@ require 'httparty'
 
 module TriggerBuild
 
-  class Travis
+  class TravisAPI
     include HTTParty
     headers 'Accept' => 'application/json',
       'Content-Type' => 'application/json',

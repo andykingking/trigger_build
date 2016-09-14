@@ -12,13 +12,13 @@ describe TriggerBuild do
   end
 
   describe '#trigger' do
-    let(:travis) { instance_double(TriggerBuild::Travis) }
+    let(:travis) { instance_double(TriggerBuild::TravisAPI) }
     let(:repo) {
       instance_double(TriggerBuild::Repo, name: 'triggerer', last_commit_message: 'Added stuff')
     }
 
     before do
-      allow(TriggerBuild::Travis).to receive(:new).and_return(travis)
+      allow(TriggerBuild::TravisAPI).to receive(:new).and_return(travis)
       allow(TriggerBuild::Repo).to receive(:new).and_return(repo)
     end
 
@@ -28,12 +28,10 @@ describe TriggerBuild do
       subject { TriggerBuild.travis(opts) }
 
       it 'triggers a build for the defined TravisCI repository' do
-        expect(TriggerBuild::Travis).to receive(:new).with({
+        expect(TriggerBuild::TravisAPI).to receive(:new).with({
           owner: 'some_guy', repo: 'cool-project', token: 'qwerty', pro: false
         })
-        expect(travis).to receive(:trigger).with(
-          'Triggered by triggerer: Added stuff', branch: 'master'
-        )
+        expect(travis).to receive(:trigger).with('Triggered by triggerer: Added stuff')
 
         subject
       end

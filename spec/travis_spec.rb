@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe TriggerBuild::Travis do
+describe TriggerBuild::TravisAPI do
   let(:opts) { {} }
 
-  subject { TriggerBuild::Travis.new(opts) }
+  subject { TriggerBuild::TravisAPI.new(opts) }
 
   describe '#initialize' do
     it 'sets the default Accept header' do
