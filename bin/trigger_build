@@ -1,7 +1,11 @@
 #!/usr/bin/env ruby
 
-require 'pp'
 require 'trigger_build'
 
 opts = TriggerBuild.parse_args(ARGV)
-pp TriggerBuild.travis(opts)
+response = TriggerBuild.travis(opts)
+if response.success?
+  puts 'Successfully triggered build'
+else
+  abort "Failed to trigger build: #{response}"
+end
