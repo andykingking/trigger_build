@@ -1,6 +1,6 @@
 require 'trigger_build/options'
 require 'trigger_build/repo'
-require 'trigger_build/travis'
+require 'trigger_build/travis_api'
 
 module TriggerBuild
 
