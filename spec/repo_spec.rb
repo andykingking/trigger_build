@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe TriggerBuild::Repo do
-  let(:git) { instance_double('Git::Base') }
+  let(:git) { instance_double(Git::Base) }
 
   subject { TriggerBuild::Repo.new }
 
@@ -30,8 +30,8 @@ describe TriggerBuild::Repo do
   end
 
   describe '#name' do
-    let(:git) { instance_double('Git::Base', dir: dir) }
-    let(:dir) { instance_double('Git::WorkingDirectory', path: 'path/to/my/repo') }
+    let(:git) { instance_double(Git::Base, dir: dir) }
+    let(:dir) { instance_double(Git::WorkingDirectory, path: 'path/to/my/repo') }
 
     it 'uses the current directory as the repo name' do
       expect(subject.name).to eq('repo')
@@ -39,8 +39,8 @@ describe TriggerBuild::Repo do
   end
 
   describe '#last_commit_message' do
-    let(:git) { instance_double('Git::Base', log: %w(995204d 64e3218 1b67d9a)) }
-    let(:commit) { instance_double('Git::Object::Commit', message: 'Last commit message') }
+    let(:git) { instance_double(Git::Base, log: %w(995204d 64e3218 1b67d9a)) }
+    let(:commit) { instance_double(Git::Object::Commit, message: 'Last commit message') }
 
     before do
       allow(git).to receive(:gcommit).with('995204d').and_return(commit)
