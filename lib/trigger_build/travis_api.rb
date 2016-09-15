@@ -1,12 +1,11 @@
 require 'httparty'
 
 module TriggerBuild
-
   class TravisAPI
     include HTTParty
     headers 'Accept' => 'application/json',
-      'Content-Type' => 'application/json',
-      'Travis-API-Version' => '3'
+            'Content-Type' => 'application/json',
+            'Travis-API-Version' => '3'
 
     def initialize(opts)
       url = opts[:pro] ? 'travis-ci.com' : 'travis-ci.org'
@@ -18,5 +17,4 @@ module TriggerBuild
       self.class.post('/requests', query: { request: { message: message, branch: branch } })
     end
   end
-
 end

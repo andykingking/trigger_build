@@ -5,9 +5,9 @@ describe TriggerBuild do
     subject { TriggerBuild.parse_args(%w(some_guy cool-project --pro --token secret_token)) }
 
     it 'correctly parses the options' do
-      expect(subject).to eq({
+      expect(subject).to eq(
         owner: 'some_guy', repo: 'cool-project', token: 'secret_token', pro: true
-      })
+      )
     end
   end
 
@@ -25,9 +25,9 @@ describe TriggerBuild do
 
     context 'with valid parameters and options' do
       it 'triggers a build for the defined TravisCI repository' do
-        expect(TriggerBuild::TravisAPI).to receive(:new).with({
+        expect(TriggerBuild::TravisAPI).to receive(:new).with(
           owner: 'some_guy', repo: 'cool-project', token: 'qwerty', pro: false
-        })
+        )
         expect(travis).to receive(:trigger)
 
         subject
@@ -35,11 +35,11 @@ describe TriggerBuild do
     end
 
     context 'from a directory which contains a git repository' do
-      let(:repo) {
+      let(:repo) do
         instance_double(
           TriggerBuild::Repo, name: 'triggerer', last_commit_message: 'Added stuff', valid?: true
         )
-      }
+      end
 
       it 'triggers a build using the repository name and last commit as the message' do
         expect(travis).to receive(:trigger).with('Triggered by triggerer: Added stuff')

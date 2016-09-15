@@ -1,9 +1,7 @@
 require 'git'
 
 module TriggerBuild
-
   class Repo
-
     def initialize(directory = Dir.pwd)
       @git = Git.open(directory) rescue nil
     end
@@ -17,9 +15,7 @@ module TriggerBuild
     end
 
     def valid?
-      not @git.nil?
+      !@git.nil?
     end
-
   end
-
 end

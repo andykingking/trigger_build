@@ -3,7 +3,6 @@ require 'trigger_build/repo'
 require 'trigger_build/travis_api'
 
 module TriggerBuild
-
   def self.parse_args(args)
     Options.parse(args)
   end
@@ -13,5 +12,4 @@ module TriggerBuild
     triggerer = repo.valid? ? "#{repo.name}: #{repo.last_commit_message}" : 'trigger_build'
     TravisAPI.new(opts).trigger("Triggered by #{triggerer}")
   end
-
 end

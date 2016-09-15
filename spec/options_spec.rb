@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-usage = %Q(usage: trigger_build [options] owner repo
+usage = %(usage: trigger_build [options] owner repo
 
 options:
     --pro          use travis-ci.com
@@ -11,25 +11,25 @@ options:
 
 shared_examples 'a valid command line option' do |args, message|
   it 'prints message and exits' do
-    expect {
+    expect do
       begin TriggerBuild::Options.parse(args)
       rescue SystemExit => error
         expect(error).to be_a(SystemExit)
         expect(error.status).to eq(0)
       end
-    }.to output(message).to_stdout
+    end.to output(message).to_stdout
   end
 end
 
 shared_examples 'invalid arguments' do |args|
   it 'prints usage and exits with error' do
-    expect {
+    expect do
       begin TriggerBuild::Options.parse(args)
       rescue SystemExit => error
         expect(error).to be_a(SystemExit)
         expect(error.status).to eq(1)
       end
-    }.to output(usage).to_stderr
+    end.to output(usage).to_stderr
   end
 end
 
@@ -72,7 +72,7 @@ describe TriggerBuild::Options do
         let(:args) { %w(owner repo) }
 
         it 'uses the given parameters and default options' do
-          expect(subject).to eq({ owner: 'owner', repo: 'repo', token: nil, pro: false })
+          expect(subject).to eq(owner: 'owner', repo: 'repo', token: nil, pro: false)
         end
       end
 
@@ -80,7 +80,7 @@ describe TriggerBuild::Options do
         let(:args) { %w(--token 54321 --pro me repo) }
 
         it 'uses the given parameters and all supplied options' do
-          expect(subject).to eq({ owner: 'me', repo: 'repo', token: '54321', pro: true })
+          expect(subject).to eq(owner: 'me', repo: 'repo', token: '54321', pro: true)
         end
       end
 
@@ -92,7 +92,7 @@ describe TriggerBuild::Options do
         end
 
         it 'uses the TRAVIS_API_TOKEN environment variable' do
-          expect(subject).to include({ token: 'my_token' })
+          expect(subject).to include(token: 'my_token')
         end
       end
 
@@ -104,7 +104,7 @@ describe TriggerBuild::Options do
         end
 
         it 'prefers the given token over the environment variable' do
-          expect(subject).to include({ token: '12345' })
+          expect(subject).to include(token: '12345')
         end
       end
 
@@ -112,7 +112,7 @@ describe TriggerBuild::Options do
         let(:args) { %w(the_owner a_repo --pro) }
 
         it 'sets the pro option' do
-          expect(subject).to include({ pro: true })
+          expect(subject).to include(pro: true)
         end
       end
 
@@ -120,7 +120,7 @@ describe TriggerBuild::Options do
         let(:args) { %w(the_owner a_repo) }
 
         it 'does not set the pro option' do
-          expect(subject).to include({ pro: false })
+          expect(subject).to include(pro: false)
         end
       end
     end

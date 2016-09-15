@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = 'trigger_build'
   spec.version       = TriggerBuild::VERSION
   spec.authors       = ['Ryan Davis']
-  spec.email         = ['void@rdavis.xyz']
+  spec.email         = ['ryan.davis@myob.com']
   spec.executables   = ['trigger_build']
 
   spec.summary       = 'Trigger Travis CI builds'
@@ -15,7 +15,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://github.com/MYOB-Technology/trigger_build'
   spec.license       = 'MIT'
 
-  spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
+  spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(spec)/}) }
   spec.bindir        = 'bin'
   spec.require_paths = ['lib']
 
@@ -26,5 +26,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'bundler', '~> 1.12'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
+  spec.add_development_dependency 'rubocop', '~> 0.42'
   spec.add_development_dependency 'simplecov', '~> 0.12'
 end
