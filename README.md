@@ -20,6 +20,8 @@ For detailed usage and options:
 
     $ trigger_build -h
 
+The Travis CI web user interface displays a message for the currently running build. By default this message will include the name of the Git repository from where the `trigger_build` command is executed and the most recent commit message. A generic message will be used if `trigger_build` is not run from a directory containing a Git repository.
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/MYOB-Technology/trigger_build.
