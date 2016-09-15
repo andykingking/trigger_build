@@ -4,7 +4,7 @@ usage = %Q(usage: trigger_build [options] owner repo
 
 options:
     --pro          use travis-ci.com
-    -t, --token    the TravisCI API token (default: TRAVIS_API_TOKEN)
+    -t, --token    the Travis CI API token (default: TRAVIS_API_TOKEN)
     -h, --help     display this message
     -v, --version  print the version
 )

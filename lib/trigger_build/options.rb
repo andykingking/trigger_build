@@ -12,7 +12,7 @@ module TriggerBuild
         o.separator 'options:'
         o.bool '--pro', 'use travis-ci.com'
         o.string '-t', '--token',
-          'the TravisCI API token (default: TRAVIS_API_TOKEN)', default: ENV['TRAVIS_API_TOKEN']
+          'the Travis CI API token (default: TRAVIS_API_TOKEN)', default: ENV['TRAVIS_API_TOKEN']
         o.on '-h', '--help', 'display this message' do
           puts o
           exit
