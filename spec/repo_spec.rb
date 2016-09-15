@@ -50,4 +50,22 @@ describe TriggerBuild::Repo do
       expect(subject.last_commit_message).to eq('Last commit message')
     end
   end
+
+  describe '#valid?' do
+    context 'when current directory is a valid git repo' do
+      it 'returns true' do
+        expect(subject.valid?).to be(true)
+      end
+    end
+
+    context 'when current directory is not a valid git repo' do
+      before(:each) do
+        allow(Git).to receive(:open).and_raise('Invalid Git repository')
+      end
+
+      it 'returns false' do
+        expect(subject.valid?).to be(false)
+      end
+    end
+  end
 end

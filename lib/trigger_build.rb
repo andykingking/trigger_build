@@ -10,7 +10,8 @@ module TriggerBuild
 
   def self.travis(opts)
     repo = Repo.new
-    TravisAPI.new(opts).trigger("Triggered by #{repo.name}: #{repo.last_commit_message}")
+    triggerer = repo.valid? ? "#{repo.name}: #{repo.last_commit_message}" : 'trigger_build'
+    TravisAPI.new(opts).trigger("Triggered by #{triggerer}")
   end
 
 end
