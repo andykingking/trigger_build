@@ -10,4 +10,4 @@ end
 desc 'Run unit tests'
 RSpec::Core::RakeTask.new(:spec)
 
-task default: %w(metrics spec)
+task default: %w[metrics spec]

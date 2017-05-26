@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe TriggerBuild do
   describe '#parse_args' do
-    subject { TriggerBuild.parse_args(%w(some_guy cool-project --pro --token secret_token)) }
+    subject { TriggerBuild.parse_args(%w[some_guy cool-project --pro --token secret_token]) }
 
     it 'correctly parses the options' do
       expect(subject).to eq(

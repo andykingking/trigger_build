@@ -35,41 +35,41 @@ end
 
 describe TriggerBuild::Options do
   describe '#parse' do
-    let(:args) { %w() }
+    let(:args) { %w[] }
 
     subject { TriggerBuild::Options.parse(args) }
 
     context 'when -h option is used' do
-      it_behaves_like 'a valid command line option', %w(-h), usage
+      it_behaves_like 'a valid command line option', %w[-h], usage
     end
 
     context 'when --help option is used' do
-      it_behaves_like 'a valid command line option', %w(--help), usage
+      it_behaves_like 'a valid command line option', %w[--help], usage
     end
 
     context 'when -v option is used' do
-      it_behaves_like 'a valid command line option', %w(-v), "#{TriggerBuild::VERSION}\n"
+      it_behaves_like 'a valid command line option', %w[-v], "#{TriggerBuild::VERSION}\n"
     end
 
     context 'when --version option is used' do
-      it_behaves_like 'a valid command line option', %w(--version), "#{TriggerBuild::VERSION}\n"
+      it_behaves_like 'a valid command line option', %w[--version], "#{TriggerBuild::VERSION}\n"
     end
 
     context 'when no parameters are specified' do
-      it_behaves_like 'invalid arguments', %w()
+      it_behaves_like 'invalid arguments', %w[]
     end
 
     context 'when not enough parameters are specified' do
-      it_behaves_like 'invalid arguments', %w(the_owner)
+      it_behaves_like 'invalid arguments', %w[the_owner]
     end
 
     context 'when too many parameters are specified' do
-      it_behaves_like 'invalid arguments', %w(the_owner a_repo some_stuff)
+      it_behaves_like 'invalid arguments', %w[the_owner a_repo some_stuff]
     end
 
     context 'when the correct number of parameters are given' do
       context 'and supplied no options' do
-        let(:args) { %w(owner repo) }
+        let(:args) { %w[owner repo] }
 
         it 'uses the given parameters and default options' do
           expect(subject).to eq(owner: 'owner', repo: 'repo', token: nil, pro: false)
@@ -77,7 +77,7 @@ describe TriggerBuild::Options do
       end
 
       context 'and supplied all options' do
-        let(:args) { %w(--token 54321 --pro me repo) }
+        let(:args) { %w[--token 54321 --pro me repo] }
 
         it 'uses the given parameters and all supplied options' do
           expect(subject).to eq(owner: 'me', repo: 'repo', token: '54321', pro: true)
@@ -85,7 +85,7 @@ describe TriggerBuild::Options do
       end
 
       context 'and no token is specified' do
-        let(:args) { %w(the_owner a_repo) }
+        let(:args) { %w[the_owner a_repo] }
 
         before do
           ENV['TRAVIS_API_TOKEN'] = 'my_token'
@@ -97,7 +97,7 @@ describe TriggerBuild::Options do
       end
 
       context 'and a token is specified' do
-        let(:args) { %w(the_owner a_repo --token 12345) }
+        let(:args) { %w[the_owner a_repo --token 12345] }
 
         before do
           ENV['TRAVIS_API_TOKEN'] = 'should_not_use_this_token'
@@ -109,7 +109,7 @@ describe TriggerBuild::Options do
       end
 
       context 'and the --pro flag is specified' do
-        let(:args) { %w(the_owner a_repo --pro) }
+        let(:args) { %w[the_owner a_repo --pro] }
 
         it 'sets the pro option' do
           expect(subject).to include(pro: true)
@@ -117,7 +117,7 @@ describe TriggerBuild::Options do
       end
 
       context 'and the --pro flag is not specified' do
-        let(:args) { %w(the_owner a_repo) }
+        let(:args) { %w[the_owner a_repo] }
 
         it 'does not set the pro option' do
           expect(subject).to include(pro: false)

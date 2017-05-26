@@ -39,7 +39,7 @@ describe TriggerBuild::Repo do
   end
 
   describe '#last_commit_message' do
-    let(:git) { instance_double(Git::Base, log: %w(995204d 64e3218 1b67d9a)) }
+    let(:git) { instance_double(Git::Base, log: %w[995204d 64e3218 1b67d9a]) }
     let(:commit) { instance_double(Git::Object::Commit, message: 'Last commit message') }
 
     before do
